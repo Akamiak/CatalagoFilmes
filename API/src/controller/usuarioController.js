@@ -4,7 +4,7 @@ const server = Router();
 
 server.post('/usuario/login', async (req, resp) => {
     try {
-        
+
         const { email, senha} = req.body;
         const x = await login(email, senha);
         resp.send(x)
@@ -19,4 +19,4 @@ server.post('/usuario/login', async (req, resp) => {
 }
 )
 
-export default { server }
+export default server
