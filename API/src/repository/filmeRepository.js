@@ -24,7 +24,6 @@ export async function listarTodosFilmes () {
 
 export async function listarPorID (id) {
     const comando = 
-    
     `SELECT id_filme		    id,
             nm_filme			nome,
             vl_avaliacao		avaliacao,
@@ -36,3 +35,18 @@ export async function listarPorID (id) {
     const [resposta] = await con.query(comando, [id])
     return resposta;
 }
+
+export async function listarPorNome (nome) {
+    const comando = 
+    `SELECT id_filme		    id,
+            nm_filme			nome,
+            vl_avaliacao		avaliacao,
+            dt_lancamento	    lancamento,
+            bt_disponivel	    disponivel
+    FROM    tb_filme 
+    WHERE   nm_filme like ? `;
+    
+    const [resposta] = await con.query(comando, [ `%${nome}%`]);
+    return resposta[0];
+}
+
