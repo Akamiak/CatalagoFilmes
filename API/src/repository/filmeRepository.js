@@ -26,6 +26,8 @@ export async function listarPorID (id) {
     const comando = 
     `SELECT id_filme		    id,
             nm_filme			nome,
+            ds_sinopse          sinopse,
+            ds_imagem           capa,
             vl_avaliacao		avaliacao,
             dt_lancamento	    lancamento,
             bt_disponivel	    disponivel
@@ -50,3 +52,11 @@ export async function listarPorNome (nome) {
     return resposta[0];
 }
 
+export async function deletarFilme (id) {
+    const comando = 
+    `DELETE FROM  tb_filme 
+           WHERE  id_filme = ?`;
+    
+    const resposta = await con.query (comando, [id]);
+    return resposta.affectedROWS;
+}

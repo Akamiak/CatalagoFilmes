@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { InserirFilme, listarPorID, listarPorNome, listarTodosFilmes } from "../repository/filmeRepository.js";
+import { deletarFilme, InserirFilme, listarPorID, listarPorNome, listarTodosFilmes } from "../repository/filmeRepository.js";
 
 const server = Router();
 
@@ -87,7 +87,23 @@ server.get('/filme/:id', async (req, resp) => {
     }
 })
 
+server.delete('/filme/:id', async (req, resp) => {
+    try{
 
+    const id = req.params.id
+    const deletar = await deletarFilme(id);
+
+    if(deletar != 1)
+    throw new Error ('Não foi possivel deletar o filme')
+
+    resp.status(200).send();
+
+    } catch(err) {
+        resp.status(400).send({
+            erro : err.message
+        })
+    }
+})
 
 
 export default server;
