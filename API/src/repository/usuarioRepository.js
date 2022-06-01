@@ -6,9 +6,10 @@ export async function login(email, senha) {
             nm_usuario	        nome,
             ds_email	        email
     from    tb_usuario
-    where   ds_email = 'admin@admin.com.br'
-    and     ds_senha = '1234'`
+    where   ds_email = ?
+    and     ds_senha = ? `
 
     const [linhas] = await con.query(comando, [email, senha])
+    console.log(linhas)
     return linhas[0]
 }
