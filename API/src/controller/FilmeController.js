@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { InserirFilme } from "../repository/filmeRepository.js";
+import { InserirFilme, listarPorID, listarTodosFilmes } from "../repository/filmeRepository.js";
 
 const server = Router();
 
@@ -34,8 +34,38 @@ server.post('/filme', async (req, resp) => {
             erro: err.message
         })
     }
+})
 
+server.get('/filme', async (req, resp) => {
+    try{
+        const resposta = await listarTodosFilmes()
+        resp.send(resposta)
+    }
 
+    catch(err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+server.get('/filme/:id', async (req, resp) => {
+    try{
+        const id = Number(req.params.id);
+
+        const resposta = await listarPorID(id);
+
+        if (!resposta)
+        throw new Error('filme não encontrado')
+
+        resp.send(resposta)
+    }
+
+    catch(err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
 })
 
 export default server;

@@ -8,3 +8,31 @@ export async function InserirFilme(filme) {
     filme.id = resposta.insertId;
     return filme
 }
+
+export async function listarTodosFilmes () {
+    const comando = `
+            SELECT id_filme		id,
+            nm_filme			nome,
+            vl_avaliacao		avaliacao,
+            dt_lancamento	    lancamento,
+            bt_disponivel	    disponivel
+    FROM    tb_filme `
+    
+    const [resposta] = await con.query(comando)
+    return resposta;
+}
+
+export async function listarPorID (id) {
+    const comando = 
+    
+    `SELECT id_filme		    id,
+            nm_filme			nome,
+            vl_avaliacao		avaliacao,
+            dt_lancamento	    lancamento,
+            bt_disponivel	    disponivel
+    FROM    tb_filme 
+    WHERE   id_filme = ? `;
+    
+    const [resposta] = await con.query(comando, [id])
+    return resposta;
+}
